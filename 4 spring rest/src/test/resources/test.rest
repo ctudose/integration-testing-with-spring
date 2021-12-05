@@ -1,0 +1,67 @@
+GET http://localhost:8081/users
+
+###
+
+
+PATCH localhost:8081/users/4
+Content-type:application/json
+
+{"name":"Sophia Jones",
+ "registered":"true"
+}
+
+###
+
+GET http://localhost:8081/users/4
+
+> {%
+    client.test("Check that user 4 has been updated", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.log(JSON.stringify(response.body));
+        client.assert(response.body.registered, "Client registration is not updated")
+    });
+%}
+
+###
+
+POST http://localhost:8081/users
+Content-type:application/json
+
+{"name": "Peter Michelsen" }
+
+> {%
+    client.global.set('Peter_id', response.body.id);
+    client.log(response.body.id);
+%}
+
+###
+
+GET http://localhost:8081/users/{{Peter_id}}
+
+> {%
+    client.test("Check that the user is added correctly", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.log(JSON.stringify(response.body));
+        client.assert(!response.body.registered, "Client registration should be false")
+        client.assert(response.body.name === 'Peter Michelsen', "Name is not the same as added")
+    });
+%}
+
+###
+
+GET http://localhost:8081/users
+
+> {%
+    client.test("Check users list", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.log(JSON.stringify(
+            response.body.filter(function(p) {
+                return p.name === 'Peter Michelsen'
+            })));
+        client.assert(response.body.filter(function(p) { return p.name === 'Peter Michelsen'}),
+             "Peter Michelsen is not in the list of users")
+    });
+%}
+
+###
+

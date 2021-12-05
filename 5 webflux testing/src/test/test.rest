@@ -1,0 +1,23 @@
+GET http://localhost:8081
+
+###
+
+POST http://localhost:8081/
+Content-type:application/json
+
+{"id":"1", "name":"John Smith", "initialAmount":"4000"}
+
+###
+
+PUT http://localhost:8081/
+Content-type:application/json
+
+{"id":"1", "name":"John Brown", "initialAmount":"4000"}
+
+###
+
+GET http://localhost:8081/name/John Smith
+
+###
+
+DELETE http://localhost:8081/1

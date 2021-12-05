@@ -1,0 +1,7 @@
+integration\testing\spring\Application.class
+integration\testing\spring\exceptions\UserNotFoundException.class
+integration\testing\spring\controllers\UserController.class
+integration\testing\spring\model\Auction.class
+integration\testing\spring\beans\CsvDataLoader.class
+integration\testing\spring\model\User.class
+integration\testing\spring\repositories\UserRepository.class
